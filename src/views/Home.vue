@@ -32,7 +32,7 @@
 					<template #button>
 						<img src="../assets/button 3(Chi) 1 (1).webp"
 							style="width: 70%; position: absolute; bottom: 0; transform: translate(-50%, 50%); z-index: 30; pointer-events: auto;"
-							@click="playClickSound" />
+							@click="handleButtonClick" />
 					</template>
 				</SpinTheWheel>
 			</div>
@@ -96,6 +96,7 @@ const canvasVerify = ref(false)
 const showPopup = ref(false)
 const popupMessage = ref('')
 const bgm = ref(null)
+const isBGMPlaying = ref(false);  // Track if BGM is playing
 
 function playClickSound() {
 	const clickSound = new Audio('/Music/Sfx/Button Click.mp3');
@@ -111,6 +112,45 @@ function playPopupSound() {
 	const popupSound = new Audio('/Music/Sfx/Win.mp3');
 	popupSound.play();
 }
+
+const hasBGMPlayed = ref(sessionStorage.getItem('hasBGMPlayed') === 'true'); // 使用 sessionStorage 检查 BGM 是否已播放
+
+function handleButtonClick() {
+	if (!hasBGMPlayed.value) {  // 如果 BGM 没有播放过
+		// 创建BGM音频对象
+		const bgmAudio = new Audio('/Music/BGM/Pop Dance Party Logo v1.mp3');
+		bgmAudio.loop = true;  // 设置BGM循环播放
+
+		// 创建按钮点击音效对象
+		const clickSound = new Audio('/Music/Sfx/Button Click.mp3');
+
+		// 尝试同时播放BGM和按钮点击声音
+		Promise.all([bgmAudio.play(), clickSound.play()])
+			.then(() => {
+				hasBGMPlayed.value = true;  // 标记 BGM 已播放
+				sessionStorage.setItem('hasBGMPlayed', 'true'); // 将标志保存到 sessionStorage 中
+				bgm.value = bgmAudio;
+			})
+			.catch((e) => {
+				console.error("播放被阻止：", e);
+				clickSound.play(); // 即使播放被阻止，仍然播放按钮点击声音
+			});
+	} else {
+		// 如果 BGM 已经播放过，只播放点击音效
+		playClickSound();
+	}
+}
+
+
+
+onBeforeUnmount(() => {
+	// 当用户导航到下一页时停止BGM
+	if (bgm.value) {
+		bgm.value.pause();
+		bgm.value.currentTime = 0;  // 可选：重置播放位置到开头
+	}
+});
+
 
 const prizesCanvas = [
 	{
@@ -234,18 +274,27 @@ onMounted(() => {
 		if (countdownTime.value > 0) {
 			countdownTime.value--;
 		} else {
-			clearInterval(interval); // 倒计时结束，停止计时器
+			clearInterval(interval); // Stop timer when countdown ends
 		}
-	}, 1000); // 每秒更新一次
+	}, 1000); // Update every second
 
-	playBGM('/Music/BGM/Pop Dance Party Logo v1.mp3');
+	// Attempt to auto-play BGM, but it may be blocked by Google
+	try {
+		playBGM('/Music/BGM/Pop Dance Party Logo v1.mp3');
+		isBGMPlaying.value = true;  // Mark BGM as playing
+	} catch (e) {
+		// If auto-play is blocked, isBGMPlaying remains false
+	}
+	sessionStorage.removeItem('hasBGMPlayed');
 
 });
 onBeforeUnmount(() => {
 	// Stop BGM when navigating away from the page
-	stopBGM();
+	if (bgm.value) {
+		bgm.value.pause();
+		bgm.value.currentTime = 0;  // 可选：重置播放位置到开头
+	}
 });
-
 
 
 </script>
