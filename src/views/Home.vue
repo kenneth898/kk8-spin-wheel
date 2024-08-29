@@ -85,9 +85,10 @@
 
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { SpinTheWheel } from 'vue-spin-the-wheel'
 import Popup from '../components/popup.vue'
+import { playBGM, stopBGM } from '@/utils/bgmManager.js';
 
 const prizeId = ref(0)
 const wheelEl = ref()
@@ -237,10 +238,15 @@ onMounted(() => {
 		}
 	}, 1000); // 每秒更新一次
 
-	bgm.value = new Audio('/image/Music/BGM/Pop Dance Party Logo v1.mp3');
-	bgm.value.loop = true; // Loop the music
-	bgm.value.play();
+	playBGM('/Music/BGM/Pop Dance Party Logo v1.mp3');
+
 });
+onBeforeUnmount(() => {
+	// Stop BGM when navigating away from the page
+	stopBGM();
+});
+
+
 
 </script>
 <style scoped>
