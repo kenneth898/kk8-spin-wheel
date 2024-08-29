@@ -32,7 +32,7 @@
 					<template #button>
 						<img src="/public/image/button (Mly) 1.webp"
 							style="width: 80%; position: absolute; bottom: 0; transform: translate(-50%, 50%); z-index: 30; pointer-events: auto;"
-							@click="playClickSound" />
+							@click="handleButtonClick" />
 					</template>
 				</SpinTheWheel>
 			</div>
