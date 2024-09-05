@@ -27,7 +27,8 @@
 					:verify="canvasVerify" :prizeId="prizeId" :angleBase="-10" :prizes="prizesImage"
 					:rotationDuration="500" @rotateStart="onImageRotateStart" @rotateEnd="onRotateEnd">
 					<template #wheel>
-						<img src="../assets/Group 14.webp" style="width: 100%;transform: rotateZ(30deg)" />
+						<img src="../assets/Group 14.webp"
+							style="width: 100%; transform: rotateZ(30deg); transform-origin: center;" />
 					</template>
 					<template #button>
 						<img src="../assets/button 3(Chi) 1 (1).webp"
@@ -150,59 +151,6 @@ onBeforeUnmount(() => {
 		bgm.value.currentTime = 0;  // 可选：重置播放位置到开头
 	}
 });
-
-
-const prizesCanvas = [
-	{
-		id: 1,
-		name: '25%每日奖金',
-		value: '25%每日奖金',
-		bgColor: '#45ace9',
-		color: '#ffffff',
-		probability: 100
-	},
-	{
-		id: 2,
-		name: '免费RM10',
-		value: '免费RM10',
-		bgColor: '#dd3832',
-		color: '#ffffff',
-		probability: 0
-	},
-	{
-		id: 3,
-		name: '888%特别奖金',
-		value: '888%特别奖金',
-		bgColor: '#fef151',
-		color: '#ffffff',
-		probability: 0
-	},
-	{
-		id: 4,
-		name: '388%奖金',
-		value: '388%奖金',
-		bgColor: '#fef151',
-		color: '#ffffff',
-		probability: 0
-	},
-	{
-		id: 5,
-		name: '50%无限奖金',
-		value: '50%无限奖金',
-		bgColor: '#fef151',
-		color: '#ffffff',
-		probability: 0
-	},
-	{
-		id: 6,
-		name: '200%体育奖金',
-		value: '200%体育奖金',
-		bgColor: '#fef151',
-		color: '#ffffff',
-		probability: 0
-	}
-]
-
 const prizesImage = [
 	{
 		id: 1,
@@ -235,10 +183,6 @@ const prizesImage = [
 		weight: 0
 	}
 ]
-
-const prizeRes = computed(() => {
-	return prizesCanvas.find(item => item.id === prizeId.value) || prizesCanvas[0]
-})
 
 const isSpinning = ref(false);
 
@@ -288,13 +232,7 @@ onMounted(() => {
 	sessionStorage.removeItem('hasBGMPlayed');
 
 });
-onBeforeUnmount(() => {
-	// Stop BGM when navigating away from the page
-	if (bgm.value) {
-		bgm.value.pause();
-		bgm.value.currentTime = 0;  // 可选：重置播放位置到开头
-	}
-});
+
 
 
 </script>
@@ -334,7 +272,9 @@ onBeforeUnmount(() => {
 	background-size: cover;
 	margin-bottom: 150px;
 	text-align: center;
+
 }
+
 
 .money-img {
 	position: absolute;
