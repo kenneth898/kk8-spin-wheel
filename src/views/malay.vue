@@ -16,8 +16,11 @@
 				</div>
 			</button>
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-				<li><router-link to="/" class="dropdown-item">中文</router-link></li>
-				<li><router-link to="/ms" class="dropdown-item">Malay</router-link></li>
+				<li><router-link to="/" class="dropdown-item"><img width="20%" src="/image/china.webp"
+							style="margin-right: 10px;">中文</router-link>
+				</li>
+				<li><router-link to="/ms" class="dropdown-item"><img width="20%" src="/image/malay.webp"
+							style="margin-right: 10px;">Malay</router-link></li>
 			</ul>
 		</div>
 		<!--spin wheel area-->
@@ -27,7 +30,7 @@
 					:verify="canvasVerify" :prizeId="prizeId" :angleBase="-10" :prizes="prizesImage"
 					:rotationDuration="500" @rotateStart="onImageRotateStart" @rotateEnd="onRotateEnd">
 					<template #wheel>
-						<img src="../assets/Group 15.webp" style="width: 100%;transform: rotateZ(30deg)" />
+						<img src="../assets/Group 16.webp" style="width: 100%;transform: rotateZ(30deg)" />
 					</template>
 					<template #button>
 						<img src="/public/image/button (Mly) 1.webp"
@@ -460,7 +463,7 @@ onBeforeUnmount(() => {
 .kk8 {
 	position: absolute;
 	top: 0px;
-	transform: translate(0, -10%);
+	transform: translate(0, -12%);
 }
 
 .language {
