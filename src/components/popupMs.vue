@@ -6,7 +6,7 @@
 				<img width="100%" src="/image/Popup message (Chi) (2).webp">
 
 				<div class="close">
-					<a @click="closePopup"><img width="60%" src="/image/button(Mly) 2.webp"></a>
+					<a href="https://kk8.my/register"><img width="60%" src="/image/button(Mly) 2.webp"></a>
 				</div>
 			</div>
 		</div>
