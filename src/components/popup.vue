@@ -6,7 +6,8 @@
 				<img width="100%" src="/image/Popup message (Chi) (1).webp">
 
 				<div class="close">
-					<a href="https://kk8.my/register"><img width="45%" src="/image/button(Chi).webp"></a>
+					<a href="https://kk8.my/register" target="_blank"><img width="45%"
+							src="/image/button(Chi).webp"></a>
 				</div>
 			</div>
 		</div>

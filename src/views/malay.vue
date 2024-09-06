@@ -118,9 +118,11 @@ const hasBGMPlayed = ref(sessionStorage.getItem('hasBGMPlayed') === 'true'); // 
 
 function handleButtonClick() {
 	if (!hasBGMPlayed.value) {  // 如果 BGM 没有播放过
+		// 创建BGM音频对象
 		const bgmAudio = new Audio('/Music/BGM/Pop Dance Party Logo v1.mp3');
 		bgmAudio.loop = true;  // 设置BGM循环播放
 
+		// 创建按钮点击音效对象
 		const clickSound = new Audio('/Music/Sfx/Button Click.mp3');
 
 		// 尝试同时播放BGM和按钮点击声音
@@ -277,15 +279,15 @@ onMounted(() => {
 		}
 	}, 1000); // Update every second
 
-	// 尝试自动播放BGM，防止重复播放
+	// Attempt to auto-play BGM, but it may be blocked by Google
 	try {
-		if (!hasBGMPlayed.value) {
-			playBGM('/Music/BGM/Pop Dance Party Logo v1.mp3');
-			isBGMPlaying.value = true;
-		}
+		playBGM('/Music/BGM/Pop Dance Party Logo v1.mp3');
+		isBGMPlaying.value = true;  // Mark BGM as playing
 	} catch (e) {
-		console.error("自动播放被阻止：", e);
+		// If auto-play is blocked, isBGMPlaying remains false
 	}
+	sessionStorage.removeItem('hasBGMPlayed');
+
 });
 onBeforeUnmount(() => {
 	// Stop BGM when navigating away from the page
